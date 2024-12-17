@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# React GIF Search App (Next.js)
 
-## Getting Started
+Aplikasi React sederhana yang dibuat menggunakan Next.js yang memungkinkan pengguna mencari GIF dari API Giphy. Aplikasi ini mencakup halaman login, dasbor dengan fungsi pencarian GIF, dan autentikasi dasar menggunakan `localStorage`.
 
-First, run the development server:
+## Fitur
+- **Login Form**: Pengguna dapat login menggunakan email dan password.
+- **Dashboard**: Setelah login, pengguna dapat mencari GIF menggunakan Giphy API.
+- **Search GIFs**: Pengguna dapat mencari GIFs berdasarkan kata kunci dan menampilkan hasil pencarian.
+- **Logout**: Pengguna dapat keluar dari aplikasi dan kembali ke halaman login.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Teknologi yang Digunakan
+- **React.js** - Untuk pengembangan komponen UI.
+- **Next.js** - Untuk server-side rendering dan routing.
+- **CSS Modules** - Untuk styling komponen.
+- **Giphy API** - Untuk pencarian GIFs.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Prasyarat
+- Node.js (LTS version)
+- npm atau yarn sebagai package manager
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Cara Instalasi
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Clone repository ini**:
+   ```bash
+   git clone https://github.com/adityadwi21/Gifs_dot.git
+   ```
 
-## Learn More
+2. **Masuk ke direktori proyek**:
+   ```bash
+   cd your-repo-name
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+3. **Install dependensi**:
+   Jika menggunakan npm:
+   ```bash
+   npm install
+   ```
+   Jika menggunakan yarn:
+   ```bash
+   yarn install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. **Jalankan aplikasi**:
+   ```bash
+   npm run dev
+   ```
+   Atau jika menggunakan yarn:
+   ```bash
+   yarn dev
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   Aplikasi akan berjalan di `http://localhost:3000`.
 
-## Deploy on Vercel
+## Penggunaan
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. **Login**: Masukkan email dan password untuk login. Setelah berhasil login, Anda akan diarahkan ke halaman dashboard.
+   
+2. **Dashboard**: Ketik kata kunci di input form untuk mencari GIF. Hasil pencarian akan ditampilkan di bawah form.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3. **Logout**: Klik tombol "Logout" di halaman dashboard untuk keluar dan kembali ke halaman login.
+
+## Catatan
+- Giphy API Key digunakan di aplikasi ini untuk mengakses data GIF. Pastikan untuk mengganti API key nya.
