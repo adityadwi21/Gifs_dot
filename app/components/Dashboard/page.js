@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React, { useState } from 'react';
 import Image from 'next/image';
@@ -15,32 +15,40 @@ export default function Dashboard() {
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    setLoading(true); 
+    if (!searchTerm.trim()) {
+      alert('Please enter a search term.');
+      return;
+    }
 
-    const apiKey = process.env.GIFS_API_KEY;
-    const url = `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${searchTerm}&limit=5`;
+    setLoading(true);
+
+    const apiKey = 'SR0kwpty6ocde4dBBN4VRIkzyuaU5ZWk';
+    const url = `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${encodeURIComponent(searchTerm)}&limit=5`;
 
     try {
       const response = await fetch(url);
-      const data = await response.json();
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
-      if (data.data) {
-        setGifs(data.data);
-      } else {
-        setGifs([]);
-      }
+      const data = await response.json();
+      setGifs(data.data || []);
     } catch (error) {
       console.error('Error fetching GIFs:', error);
+      setGifs([]);
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('isLoggedIn');
+    window.location.reload();
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <h1>Search GIFs</h1>
-        <div onClick={() => { localStorage.removeItem('isLoggedIn'); window.location.reload(); }} className={styles.logout}>
+        <div onClick={handleLogout} className={styles.logout}>
           Logout
         </div>
       </div>
@@ -48,8 +56,14 @@ export default function Dashboard() {
       <div className={styles.card}>
         <form onSubmit={handleSearch} className={styles.form}>
           <div className={styles.formGroup}>
-            <label>Search GIFs:</label>
-            <input type="text" value={searchTerm} onChange={handleChange} />
+            <label htmlFor="search">Search GIFs:</label>
+            <input
+              id="search"
+              type="text"
+              value={searchTerm}
+              onChange={handleChange}
+              placeholder="Enter a keyword"
+            />
           </div>
 
           <button type="submit" className={styles.button}>
@@ -60,18 +74,18 @@ export default function Dashboard() {
 
       <div className={styles.results}>
         {loading ? (
-          <div className={styles.spinner}></div> 
+          <div className={styles.spinner}></div>
         ) : gifs.length > 0 ? (
           gifs.map((gif) => (
             <div key={gif.id} className={styles.resultCard}>
-              <h3>{gif.title}</h3>
+              <h3>{gif.title || 'Untitled GIF'}</h3>
               <div className={styles.imageWrapper}>
-                <Image 
-                  src={gif.images.fixed_height.url} 
-                  alt={gif.title} 
-                  width={gif.images.fixed_height.width} 
-                  height={gif.images.fixed_height.height} 
-                  priority={true} 
+                <Image
+                  src={gif.images.fixed_height.url}
+                  alt={gif.title || 'GIF'}
+                  width={parseInt(gif.images.fixed_height.width, 10) || 200}
+                  height={parseInt(gif.images.fixed_height.height, 10) || 200}
+                  priority
                 />
               </div>
             </div>
