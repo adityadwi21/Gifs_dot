@@ -22,7 +22,7 @@ export default function Dashboard() {
 
     setLoading(true);
 
-    const apiKey = process.env.GIPHY_API_KEY;
+    const apiKey = process.env.NEXT_PUBLIC_GIPHY_API_KEY;
     const url = `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${encodeURIComponent(searchTerm)}&limit=5`;
 
     try {
