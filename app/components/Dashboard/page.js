@@ -8,7 +8,6 @@ export default function Dashboard() {
   const [searchTerm, setSearchTerm] = useState("");
   const [gifs, setGifs] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
 
   const handleChange = (e) => {
     setSearchTerm(e.target.value);
@@ -16,27 +15,25 @@ export default function Dashboard() {
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setError(null);
-
     if (!searchTerm.trim()) {
-      setError("Please enter a search term");
-      setLoading(false);
+      alert("Please enter a search term.");
       return;
     }
 
-    try {
-      const response = await fetch(`/api/searchGifs?q=${searchTerm}`);
-      const data = await response.json();
+    setLoading(true);
 
-      if (data.data) {
-        setGifs(data.data);
-      } else {
-        setGifs([]);
-      }
+    const apiKey = process.env.NEXT_PUBLIC_GIPHY_API_KEY;
+    const url = `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${encodeURIComponent(searchTerm)}&limit=5`;
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+      const data = await response.json();
+      setGifs(data.data || []);
     } catch (error) {
       console.error("Error fetching GIFs:", error);
-      setError("Failed to fetch GIFs. Please try again.");
+      setGifs([]);
     } finally {
       setLoading(false);
     }
@@ -72,8 +69,6 @@ export default function Dashboard() {
       <div className={styles.results}>
         {loading ? (
           <div className={styles.spinner}></div>
-        ) : error ? (
-          <p className={styles.error}>{error}</p>
         ) : gifs.length > 0 ? (
           gifs.map((gif) => (
             <div key={gif.id} className={styles.resultCard}>
